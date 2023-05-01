@@ -166,7 +166,7 @@ class Keyboard {
       const currentValue = this.textarea.value;
       this.textarea.value = currentValue.substring(0, currentValue.length - 1);
     } else if (key === 'Enter') {
-      this.textarea.value += '\n';
+      this.textarea.value += '\n ';
     } else if (key === 'Tab') {
       this.textarea.value += '\t';
     } else if (key === 'Alt') {
