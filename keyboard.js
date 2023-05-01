@@ -114,7 +114,40 @@ class Keyboard {
 
   handleKeyDown(event) {
     const { key } = event;
-    this.textarea.value += key;
+    if (key === 'CapsLock') {
+      this.capsLockOn = !this.capsLockOn;
+      this.keys.forEach((key) => {
+        if (key.key.length === 1) {
+          key.element.textContent = this.capsLockOn
+            ? key.key.toUpperCase()
+            : key.key.toLowerCase();
+        }
+      });
+      // const capsLockKey = this.keys.find((key) => key.key === 'CapsLock');
+      // capsLockKey.element.classList.toggle('active', this.capsLockOn);
+    } else if (key === 'Backspace') {
+      const currentValue = this.textarea.value;
+      this.textarea.value = currentValue.substring(0, currentValue.length - 1);
+    } else if (key === 'Enter') {
+      this.textarea.value += '\n';
+    } else if (key === 'Tab') {
+      this.textarea.value += '\t';
+    } else if (key === 'Alt') {
+      this.textarea.value += '';
+    } else if (key === 'Control') {
+      this.textarea.value += '';
+    } else if (key === 'Meta') {
+      this.textarea.value += '';
+    } else if (key === '') {
+      this.textarea.value += ' ';
+    } else if (key === 'Delete') {
+      this.textarea.value += '';
+    } else if (key === 'Shift') {
+      this.textarea.value += '';
+    } else {
+      const letter = this.capsLockOn ? key.toUpperCase() : key.toLowerCase();
+      this.textarea.value += letter;
+    }
   }
 
   handleKey(key) {
@@ -149,9 +182,9 @@ class Keyboard {
     } else if (key === 'Shift') {
       this.textarea.value += '';
     } else {
-      // const letter = this.capsLockOn ? key.toUpperCase() : key.toLowerCase();
-      // this.textarea.value += letter;
-      this.textarea.value += key;
+      const letter = this.capsLockOn ? key.toUpperCase() : key.toLowerCase();
+      this.textarea.value += letter;
+      // this.textarea.value += key;
     }
   }
 }
