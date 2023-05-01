@@ -53,6 +53,7 @@ body {
 
 .key:hover {
   background-color: aquamarine;
+  transition: .5s;
 }
 
 .row {

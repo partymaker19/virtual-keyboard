@@ -64,6 +64,7 @@ class Keyboard {
     this.parent = parent;
     this.textarea = textarea;
     this.keys = [];
+    document.addEventListener("keydown", this.handleKeyDown.bind(this));
 
     keyboardLayout.forEach((row) => {
       const rowElem = document.createElement("div");
@@ -98,6 +99,12 @@ class Keyboard {
       this.parent.appendChild(rowElem);
     });
   }
+
+  handleKeyDown(event) {
+    const key = event.key;
+    this.textarea.value += key;
+  }
+
   handleKey(key) {
     this.textarea.value += key;
   }
