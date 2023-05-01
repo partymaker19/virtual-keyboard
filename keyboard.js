@@ -1,62 +1,65 @@
-import Key from "./key.js";
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
+import Key from './key.js';
 
-const container = document.createElement("div");
-container.id = "conteiner";
-container.classList.add("container");
+const container = document.createElement('div');
+container.id = 'conteiner';
+container.classList.add('container');
 document.body.append(container);
 
-const textArea = document.createElement("textarea");
-textArea.id = "text";
-textArea.cols = "100";
-textArea.rows = "20";
+const textArea = document.createElement('textarea');
+textArea.id = 'text';
+textArea.cols = '100';
+textArea.rows = '20';
 document.body.append(textArea);
 container.appendChild(textArea);
 
-const keyboardWrapper = document.createElement("div");
-keyboardWrapper.id = "keyboard";
+const keyboardWrapper = document.createElement('div');
+keyboardWrapper.id = 'keyboard';
 document.body.append(keyboardWrapper);
 container.appendChild(keyboardWrapper);
 
-const myKeyboard = document.getElementById("keyboard");
-const mytext = document.getElementById("text");
+const myKeyboard = document.getElementById('keyboard');
+const mytext = document.getElementById('text');
 
 const keyboardLayout = [
   [
-    "`",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "0",
-    "-",
-    "=",
-    "Backspace",
+    '`',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '0',
+    '-',
+    '=',
+    'Backspace',
   ],
   [
-    "Tab",
-    "q",
-    "w",
-    "e",
-    "r",
-    "t",
-    "y",
-    "u",
-    "i",
-    "o",
-    "p",
-    "[",
-    "]",
-    "\\",
-    "Del",
+    'Tab',
+    'q',
+    'w',
+    'e',
+    'r',
+    't',
+    'y',
+    'u',
+    'i',
+    'o',
+    'p',
+    '[',
+    ']',
+    '\\',
+    'Del',
   ],
-  ["CapsLk", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "Enter"],
-  ["Shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "▲", "Shift"],
-  ["Ctrl", "Win", "Alt", "", "Alt", "◄", "▼", "►", "Ctrl"],
+  ['CapsLk', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter'],
+  ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '▲', 'Shift'],
+  ['Ctrl', 'Win', 'Alt', '', 'Alt', '◄', '▼', '►', 'Ctrl'],
 ];
 
 class Keyboard {
@@ -64,35 +67,36 @@ class Keyboard {
     this.parent = parent;
     this.textarea = textarea;
     this.keys = [];
-    document.addEventListener("keydown", this.handleKeyDown.bind(this));
+    document.addEventListener('keydown', this.handleKeyDown.bind(this));
+    this.capsLockOn = false;
 
     keyboardLayout.forEach((row) => {
-      const rowElem = document.createElement("div");
-      rowElem.className = "row";
+      const rowElem = document.createElement('div');
+      rowElem.className = 'row';
       row.forEach((key) => {
         const keyObj = new Key(key, this.handleKey.bind(this));
         this.keys.push(keyObj);
         keyObj.render(rowElem);
-        if (keyObj.key === "Backspace") {
-          keyObj.element.classList.add("backspace");
-        } else if (keyObj.key === "Tab") {
-          keyObj.element.classList.add("tab");
-        } else if (keyObj.key === "Enter") {
-          keyObj.element.classList.add("enter");
-        } else if (keyObj.key === "CapsLk") {
-          keyObj.element.classList.add("capslock");
-        } else if (keyObj.key === "") {
-          keyObj.element.classList.add("space");
-        } else if (keyObj.key === "Shift") {
-          keyObj.element.classList.add("shift");
-        } else if (keyObj.key === "Alt") {
-          keyObj.element.classList.add("alt");
-        } else if (keyObj.key === "Ctrl") {
-          keyObj.element.classList.add("ctrl");
-        } else if (keyObj.key === "Del") {
-          keyObj.element.classList.add("del");
-        } else if (keyObj.key === "Win") {
-          keyObj.element.classList.add("win");
+        if (keyObj.key === 'Backspace') {
+          keyObj.element.classList.add('backspace');
+        } else if (keyObj.key === 'Tab') {
+          keyObj.element.classList.add('tab');
+        } else if (keyObj.key === 'Enter') {
+          keyObj.element.classList.add('enter');
+        } else if (keyObj.key === 'CapsLk') {
+          keyObj.element.classList.add('capslock');
+        } else if (keyObj.key === '') {
+          keyObj.element.classList.add('space');
+        } else if (keyObj.key === 'Shift') {
+          keyObj.element.classList.add('shift');
+        } else if (keyObj.key === 'Alt') {
+          keyObj.element.classList.add('alt');
+        } else if (keyObj.key === 'Ctrl') {
+          keyObj.element.classList.add('ctrl');
+        } else if (keyObj.key === 'Del') {
+          keyObj.element.classList.add('del');
+        } else if (keyObj.key === 'Win') {
+          keyObj.element.classList.add('win');
         }
       });
 
@@ -101,12 +105,30 @@ class Keyboard {
   }
 
   handleKeyDown(event) {
-    const key = event.key;
+    const { key } = event;
     this.textarea.value += key;
   }
 
   handleKey(key) {
-    this.textarea.value += key;
+    if (key === 'CapsLk') {
+      this.capsLockOn = !this.capsLockOn;
+      this.keys.forEach((key) => {
+        if (key.key.length === 1) {
+          key.element.textContent = this.capsLockOn
+            ? key.key.toUpperCase()
+            : key.key.toLowerCase();
+        }   
+      });
+      const capsLockKey = this.keys.find((key) => key.key === "CapsLk");
+      capsLockKey.element.classList.toggle("active", this.capsLockOn);
+    } else if (key === 'Backspace') {
+      const currentValue = this.textarea.value;
+      this.textarea.value = currentValue.substring(0, currentValue.length - 1);
+    } else {
+      // const letter = this.capsLockOn ? key.toUpperCase() : key.toLowerCase();
+      // this.textarea.value += letter;
+      this.textarea.value += key;
+    }
   }
 }
 

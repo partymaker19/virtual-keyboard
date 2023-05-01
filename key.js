@@ -9,6 +9,18 @@ export default class Key {
     this.element.addEventListener("click", () => {
       this.callback(this.key);
     });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === this.key) {
+        this.element.classList.add("active");
+      }
+    });
+
+    document.addEventListener("keyup", (event) => {
+      if (event.key === this.key) {
+        this.element.classList.remove("active");
+      }
+    });
   }
 
   render(parent) {
