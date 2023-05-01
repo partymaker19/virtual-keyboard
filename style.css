@@ -119,4 +119,5 @@ body {
 .active {
   background-color: #2cfd72;
   border-radius: 50px;
+  transition: .2s;
 }

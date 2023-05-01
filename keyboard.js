@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
@@ -62,6 +63,13 @@ const keyboardLayout = [
   ['Ctrl', 'Win', 'Alt', '', 'Alt', '◄', '▼', '►', 'Ctrl'],
 ];
 
+const russianKeyboardLayout = [['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
+  ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del'],
+  ['CapsLk', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter'],
+  ['Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '▲', 'Shift'],
+  ['Ctrl', 'Win', 'Alt', '', 'Alt', '◄', '▼', '►', 'Ctrl'],
+];
+
 class Keyboard {
   constructor(parent, textarea) {
     this.parent = parent;
@@ -117,13 +125,29 @@ class Keyboard {
           key.element.textContent = this.capsLockOn
             ? key.key.toUpperCase()
             : key.key.toLowerCase();
-        }   
+        }
       });
-      const capsLockKey = this.keys.find((key) => key.key === "CapsLk");
-      capsLockKey.element.classList.toggle("active", this.capsLockOn);
+      const capsLockKey = this.keys.find((key) => key.key === 'CapsLk');
+      capsLockKey.element.classList.toggle('active', this.capsLockOn);
     } else if (key === 'Backspace') {
       const currentValue = this.textarea.value;
       this.textarea.value = currentValue.substring(0, currentValue.length - 1);
+    } else if (key === 'Enter') {
+      this.textarea.value += '\n';
+    } else if (key === 'Tab') {
+      this.textarea.value += '\t';
+    } else if (key === 'Alt') {
+      this.textarea.value += '';
+    } else if (key === 'Ctrl') {
+      this.textarea.value += '';
+    } else if (key === 'Win') {
+      this.textarea.value += '';
+    } else if (key === '') {
+      this.textarea.value += ' ';
+    } else if (key === 'Del') {
+      this.textarea.value += '';
+    } else if (key === 'Shift') {
+      this.textarea.value += '';
     } else {
       // const letter = this.capsLockOn ? key.toUpperCase() : key.toLowerCase();
       // this.textarea.value += letter;
